@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Fundamentals Cheatsheet</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="toc">
+    <button id="clsBtn">Close</button>
+    <h2>Table of Content</h2>
+    <a href="#" class="dl-text">Download Markdown ver.</a>
+    <ul>
+      <li><a href="#section1">1. Manipulation</a>
+        <ul class="sub-bab">
+          <li><a href="#sub-section1-1">1.1. CREATE</a></li>
+          <li><a href="#sub-section1-2">1.2. INSERT</a></li>
+          <li><a href="#sub-section1-3">1.3. ALTER</a></li>
+          <li><a href="#sub-section1-4">1.4. DELETE</a></li>
+          <li><a href="#sub-section1-5">1.5. UPDATE</a></li>
+        </ul>
+      </li>
+      <li><a href="#section2">2. Queries</a>
+        <ul class="sub-bab">
+          <li><a href="#sub-section2-1">2.1. AND</a></li>
+          <li><a href="#sub-section2-2">2.2. AS</a></li>
+          <li><a href="#sub-section2-3">2.3. OR</a></li>
+          <li><a href="#sub-section2-4">2.4. % and _ Wildcard</a></li>
+          <li><a href="#sub-section2-5">2.5. ORDER BY</a></li>
+          <li><a href="#sub-section2-6">2.6. GROUP BY</a></li>
+          <li><a href="#sub-section2-7">2.7. LIKE</a></li>
+          <li><a href="#sub-section2-8">2.8. DISTINCT</a></li>
+          <li><a href="#sub-section2-9">2.9. BETWEEN</a></li>
+          <li><a href="#sub-section2-10">2.10. LIMIT</a></li>
+          <li><a href="#sub-section2-11">2.11. NULL</a></li>
+        </ul>
+      </li>
+      <li><a href="#section3">3. Aggregate Functions</a>
+        <ul class="sub-bab">
+          <li><a href="#sub-section3-1">3.1. SUM()</a></li>
+          <li><a href="#sub-section3-2">3.2. MAX()</a></li>
+          <li><a href="#sub-section3-3">3.3. MIN()</a></li>
+          <li><a href="#sub-section3-4">3.4. COUNT()</a></li>
+          <li><a href="#sub-section3-5">3.5. AVG()</a></li>
+          <li><a href="#sub-section3-6">3.6. ROUND()</a></li>
+          <li><a href="#sub-section3-7">3.7. HAVING</a></li>
+        </ul>
+      </li>
+      <li><a href="#section4">4. Multiple Tables</a>
+        <ul class="sub-bab">
+          <li><a href="#sub-section4-1">4.1. Outer Join</a></li>
+          <li><a href="#sub-section4-2">4.2. Inner Join</a></li>
+          <li><a href="#sub-section4-3">4.3. Cross Join</a></li>
+          <li><a href="#sub-section4-4">4.4. WITH</a></li>
+          <li><a href="#sub-section4-5">4.5. UNION</a></li>
+          <li><a href="#sub-section4-6">4.6. PRIMARY KEY</a></li>
+          <li><a href="#sub-section4-7">4.7. FOREIGN KEY</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  
+
+<div class="content">
+    <h1 id="sql-fundamentals">SQL Fundamentals</h1>
+<p><em>owner : MasterThe8</em></p>
+<hr>
+<button id="toggleBtn">Show Table of Content</button>
+<h2 id="manipulation">Manipulation</h2>
+<p>Operasi-operasi yang digunakan untuk memanipulasi data dalam basis data.</p>
+<h3 id="create">CREATE</h3>
+<p>Membuat tabel</p>
+<pre><code class="sql-query">CREATE TABLE table_name (
+  column1 datatype,
+  column2 datatype,
+  column3 datatype
+);
+</code></pre>
+<h3 id="insert">INSERT</h3>
+<p>Menambah data (baris) baru ke tabel</p>
+<pre><code class="sql-query">-- Insert into columns in order:
+INSERT INTO table_name
+VALUES (value1, value2);
+
+-- Insert into columns by name:
+INSERT INTO table_name (column1, column2)
+VALUES (value1, value2);
+</code></pre>
+<h3 id="alter">ALTER</h3>
+<p><code class="sql-query">ALTER TABLE</code> digunakan untuk mengubah kolom tabel yang ada. Jika digabungkan dengan klausa <code class="sql-query">ADD</code>, digunakan untuk menambahkan kolom baru.</p>
+<pre><code class="sql-query">ALTER TABLE table_name
+ADD column_name datatype;
+</code></pre>
+<h3 id="delete">DELETE</h3>
+<p>Menghapus baris pada tabel</p>
+<pre><code class="sql-query">DELETE FROM table_name
+WHERE some_column = some_value;
+</code></pre>
+<h3 id="update">UPDATE</h3>
+<p>Memperbarui value pada tabel berdasarkan baris</p>
+<pre><code class="sql-query">UPDATE table_name
+SET column1 = value1, column2 = value2
+WHERE some_column = some_value;
+
+-- Example:
+UPDATE Customers
+SET ContactName = &#39;Asuka&#39;, City = &#39;Tokyo&#39;
+WHERE CustomerID = 1;
+</code></pre>
+<hr>
+<h2 id="queries">Queries</h2>
+<p>Operasi-operasi (Query) yang digunakan untuk mengambil data dari basis data.</p>
+<h3 id="and">AND</h3>
+<p>Operator <code class="sql-query">AND</code> memungkinkan beberapa kondisi untuk digabungkan.</p>
+<pre><code class="sql-query">SELECT model 
+FROM cars 
+WHERE color = &#39;blue&#39; 
+  AND year &gt; 2014;
+</code></pre>
+<h3 id="as">AS</h3>
+<p>Kolom atau tabel dapat diberi alias menggunakan klausa <code class="sql-query">AS</code>. Hal ini memungkinkan kolom atau tabel diganti namanya secara khusus di kumpulan hasil yang dikembalikan. Kueri yang diberikan akan mengembalikan kumpulan hasil dengan kolom <code class="sql-query">name</code> diubah namanya menjadi <code class="sql-query">movie_title</code>.</p>
+<pre><code class="sql-query">SELECT name AS &#39;movie_title&#39;
+FROM movies;
+</code></pre>
+<h3 id="or">OR</h3>
+<p>Operator <code class="sql-query">OR</code> memungkinkan beberapa kondisi untuk digabungkan. Rekaman yang cocok dengan salah satu kondisi yang digabungkan dengan <code class="sql-query">OR</code> disertakan dalam kumpulan hasil.</p>
+<pre><code class="sql-query">SELECT name
+FROM customers 
+WHERE state = &#39;CA&#39; 
+   OR state = &#39;NY&#39;;
+</code></pre>
+<h3 id="-and-_-wildcard"><code class="sql-query">%</code> and <code class="sql-query">_</code> Wildcard</h3>
+<p>Wildcard adalah karakter khusus yang digunakan untuk mencocokkan pola dalam string saat melakukan pencarian atau filtering data.</p>
+<ul>
+<li><code class="sql-query">%</code> (persentase): Digunakan untuk mencocokkan nol atau lebih karakter apa pun dalam string.</li>
+<li><code class="sql-query">_</code> (garis bawah): Digunakan untuk mencocokkan satu karakter tunggal dalam string.</li>
+</ul>
+<pre><code class="sql-query">SELECT * FROM customers WHERE name LIKE &#39;J%&#39;
+</code></pre>
+<p>akan mencocokkan semua nama yang dimulai dengan huruf &#39;J&#39;.</p>
+<pre><code class="sql-query">SELECT * FROM products WHERE name LIKE &#39;%apple%&#39;
+</code></pre>
+<p>akan mencocokkan semua produk yang memiliki kata &#39;apple&#39; di dalam namanya.</p>
+<pre><code class="sql-query">SELECT * FROM employees WHERE last_name LIKE &#39;_mith&#39;
+</code></pre>
+<p>akan mencocokkan semua nama belakang yang memiliki lima karakter, di mana karakter keempat adalah &#39;m&#39; dan karakter terakhir adalah &#39;i&#39;, &#39;t&#39;, dan &#39;h&#39;.</p>
+<h3 id="order-by">ORDER BY</h3>
+<p>Klausa <code class="sql-query">ORDER BY</code> dapat digunakan untuk mengurutkan hasil yang ditetapkan berdasarkan kolom tertentu baik berdasarkan abjad atau numerik. Itu dapat dipesan dengan dua cara:</p>
+<ul>
+<li><code class="sql-query">DESC</code> adalah kata kunci yang digunakan untuk mengurutkan hasil dalam urutan menurun.</li>
+<li><code class="sql-query">ASC</code> adalah kata kunci yang digunakan untuk mengurutkan hasil dalam urutan menaik (default).</li>
+</ul>
+<pre><code class="sql-query">SELECT * FROM customers ORDER BY last_name ASC;
+
+SELECT * FROM products ORDER BY price DESC;
+
+SELECT * FROM orders ORDER BY order_date DESC, total_amount ASC;
+</code></pre>
+<h3 id="group-by">GROUP BY</h3>
+<p>Klausa <code class="sql-query">GROUP BY</code> digunakan untuk mengelompokkan baris berdasarkan nilai dalam satu atau beberapa kolom. Ketika Anda menggunakan <code class="sql-query">GROUP BY</code>, setiap baris dalam hasil query akan dikelompokkan berdasarkan nilai yang sama dalam kolom yang ditentukan.</p>
+<pre><code class="sql-query">SELECT department, COUNT(*) AS employee_count
+FROM employees
+GROUP BY department;
+</code></pre>
+<p>Pernyataan ini akan menghitung jumlah pegawai dalam setiap departemen dengan menggunakan GROUP BY department.</p>
+<pre><code class="sql-query">SELECT rating, 
+   COUNT(*) 
+FROM movies 
+GROUP BY rating;
+</code></pre>
+<h3 id="like">LIKE</h3>
+<p>Operator <code class="sql-query">LIKE</code> dapat digunakan di dalam klausa <code class="sql-query">WHERE</code> untuk mencocokkan pola tertentu.</p>
+<ul>
+<li><code class="sql-query">%</code> (persentase): Cocokkan nol atau lebih karakter.</li>
+<li><code class="sql-query">_</code> (garis bawah): Cocokkan satu karakter tunggal.</li>
+</ul>
+<p>Pada contoh ini, query akan mengembalikan semua produk yang memiliki kata &#39;apple&#39; di dalam nama produknya.</p>
+<pre><code class="sql-query">SELECT * FROM products WHERE name LIKE &#39;%apple%&#39;;
+</code></pre>
+<p>Pada contoh ini, query akan mengembalikan semua pelanggan yang memiliki alamat email dengan domain &#39;gmail.com&#39;, dengan satu karakter sebelum karakter &#39;@&#39;.</p>
+<pre><code class="sql-query">SELECT * FROM customers WHERE email LIKE &#39;_@gmail.com&#39;;
+</code></pre>
+<p>Pada contoh ini, query akan mengembalikan semua pegawai yang nama belakangnya dimulai dengan huruf &#39;Sm&#39;.</p>
+<pre><code class="sql-query">SELECT * FROM employees WHERE last_name LIKE &#39;Sm%&#39;;
+</code></pre>
+<h3 id="distinct">DISTINCT</h3>
+<p>Klausa <code class="sql-query">DISTINCT</code> digunakan untuk menghapus duplikat dari hasil query sehingga hanya nilai unik yang ditampilkan.</p>
+<pre><code class="sql-query">SELECT DISTINCT department FROM employees;
+</code></pre>
+<p>Pada contoh di atas, query akan mengembalikan daftar departemen unik dari tabel &quot;employees&quot;, menghilangkan duplikat. Ini berguna jika Anda ingin melihat departemen apa saja yang ada di perusahaan tanpa adanya duplikat.</p>
+<pre><code class="sql-query">SELECT DISTINCT first_name, last_name FROM customers;
+</code></pre>
+<p>Pada contoh ini, query akan mengembalikan daftar nama pelanggan unik dari tabel &quot;customers&quot;, tanpa adanya duplikat. Ini memungkinkan Anda untuk melihat kombinasi unik dari nama pelanggan dalam tabel.</p>
+<h3 id="between">BETWEEN</h3>
+<p>Operator <code class="sql-query">BETWEEN</code> digunakan untuk memfilter hasil query berdasarkan range nilai tertentu dari sebuah kolom. Operator ini memungkinkan Anda untuk menentukan batas atas dan batas bawah yang ingin Anda sertakan dalam pencarian.</p>
+<pre><code class="sql-query">SELECT column_name(s)
+FROM table_name
+WHERE column_name BETWEEN value1 AND value2;
+</code></pre>
+<ul>
+<li><code class="sql-query">column_name</code> adalah nama kolom yang akan diuji.</li>
+<li><code class="sql-query">value1</code> dan <code class="sql-query">value2</code> adalah nilai yang menentukan batas bawah dan batas atas dari range yang ingin Anda cari.</li>
+</ul>
+<pre><code class="sql-query">SELECT * FROM products
+WHERE price BETWEEN 10 AND 20;
+</code></pre>
+<p>Pada contoh ini, query akan mengembalikan semua produk dengan harga antara 10 dan 20.</p>
+<h3 id="limit">LIMIT</h3>
+<p>Klausa <code class="sql-query">LIMIT</code> digunakan untuk membatasi jumlah baris yang dikembalikan oleh sebuah query. Ini sangat berguna ketika Anda ingin mengambil sejumlah tertentu dari hasil query, terutama jika tabel tersebut memiliki banyak baris dan Anda hanya memerlukan sebagian kecil dari hasilnya.</p>
+<pre><code class="sql-query">SELECT * FROM products
+LIMIT 10;
+</code></pre>
+<p>Pada contoh ini, query akan mengembalikan 10 produk pertama dari tabel &quot;products&quot;.</p>
+<pre><code class="sql-query">SELECT * FROM employees
+LIMIT 5, 10;
+</code></pre>
+<p>Pada contoh ini, query akan mengembalikan 10 pegawai dimulai dari baris ke-6 (karena pengindeksan dimulai dari 0) dalam tabel &quot;employees&quot;. <code class="sql-query">5</code> adalah offset, yang menunjukkan mulai dari baris ke-6, dan <code class="sql-query">10</code> adalah jumlah baris yang akan diambil setelah offset tersebut.</p>
+<h3 id="null">NULL</h3>
+<p>NULL adalah nilai yang menunjukkan bahwa kolom tidak memiliki nilai data yang valid.</p>
+<p>Beberapa hal yang perlu diingat tentang nilai NULL:</p>
+<ul>
+<li>NULL tidak sama dengan 0 atau string kosong (&#39;&#39;).</li>
+<li>Kondisi yang melibatkan nilai NULL menggunakan operator <code class="sql-query">IS NULL</code> atau <code class="sql-query">IS NOT NULL</code> karena NULL tidak dapat diuji dengan operator perbandingan seperti <code class="sql-query">=</code>, <code class="sql-query">!=</code>, <code class="sql-query">&lt;</code>, <code class="sql-query">&gt;</code>, dll.</li>
+<li>Ketika Anda membandingkan nilai dengan NULL, hasilnya selalu NULL.</li>
+<li>NULL dianggap tidak sama dengan NULL dalam kondisi perbandingan.</li>
+<li>Ketika NULL muncul dalam ekspresi matematika, hasilnya selalu NULL.</li>
+<li>Dalam tabel, kolom yang dideklarasikan dengan jenis data tertentu dapat berisi NULL jika kolom tersebut dibiarkan kosong atau jika data yang dimasukkan tidak valid.</li>
+</ul>
+<pre><code class="sql-query">SELECT * FROM employees WHERE department IS NULL;
+</code></pre>
+<p>Query ini akan mengembalikan semua pegawai yang tidak terdaftar dalam departemen manapun, karena kolom departemen mereka berisi nilai NULL.</p>
+<pre><code class="sql-query">SELECT * FROM students WHERE score IS NOT NULL;
+</code></pre>
+<p>Query ini akan mengembalikan semua siswa yang memiliki nilai tidak NULL dalam kolom &quot;score&quot;, yaitu siswa yang telah menerima penilaian.</p>
+<hr>
+<h2 id="aggregate-functions">Aggregate Functions</h2>
+<p>Fungsi-fungsi yang digunakan untuk melakukan operasi agregasi pada sekelompok nilai.</p>
+<h3 id="sum">SUM()</h3>
+<p>Fungsi <code class="sql-query">SUM()</code> digunakan untuk menjumlahkan nilai numerik dari suatu kolom dalam hasil query.</p>
+<pre><code class="sql-query">transaction_id | amount
+1              | 100.00
+2              | 150.00
+3              | 75.00
+4              | 200.00
+5              | 80.00
+</code></pre>
+<pre><code class="sql-query">SELECT SUM(amount) AS total_sales
+FROM sales;
+</code></pre>
+<pre><code class="sql-query">total_sales
+605.00
+</code></pre>
+<h3 id="max">MAX()</h3>
+<p>Fungsi <code class="sql-query">MAX()</code> digunakan untuk mengambil nilai maksimum dari sebuah kolom dalam hasil query.</p>
+<pre><code class="sql-query">product_id | product_name | price
+1          | Laptop       | 1200.00
+2          | Smartphone   | 800.00
+3          | Tablet       | 500.00
+4          | Headphones   | 150.00
+5          | Mouse        | 30.00
+</code></pre>
+<pre><code class="sql-query">SELECT MAX(price) AS highest_price
+FROM products;
+</code></pre>
+<pre><code class="sql-query">highest_price
+1200.00
+</code></pre>
+<h3 id="min">MIN()</h3>
+<p>Fungsi <code class="sql-query">MIN()</code> digunakan untuk mengambil nilai minimum dari sebuah kolom dalam hasil query.</p>
+<pre><code class="sql-query">product_id | product_name | price
+1          | Laptop       | 1200.00
+2          | Smartphone   | 800.00
+3          | Tablet       | 500.00
+4          | Headphones   | 150.00
+5          | Mouse        | 30.00
+</code></pre>
+<pre><code class="sql-query">SELECT MIN(price) AS lowest_price
+FROM products;
+</code></pre>
+<pre><code class="sql-query">lowest_price
+30.00
+</code></pre>
+<h3 id="count">COUNT()</h3>
+<p>Fungsi <code class="sql-query">COUNT()</code> digunakan untuk menghitung jumlah baris atau nilai yang ditemukan dalam sebuah kolom atau hasil query.</p>
+<ul>
+<li>Menghitung jumlah baris dalam sebuah tabel:</li>
+</ul>
+<pre><code class="sql-query">SELECT COUNT(*) AS total_rows
+FROM employees;
+</code></pre>
+<p>Hasilnya akan memberikan jumlah total baris dalam tabel &quot;employees&quot;.</p>
+<ul>
+<li>Menghitung jumlah nilai yang tidak NULL dalam sebuah kolom:</li>
+</ul>
+<pre><code class="sql-query">SELECT COUNT(salary) AS total_salaries
+FROM employees;
+</code></pre>
+<p>Hasilnya akan memberikan jumlah total nilai gaji yang tidak NULL dalam kolom &quot;salary&quot; pada tabel &quot;employees&quot;.</p>
+<ul>
+<li>Menggunakan COUNT() bersama dengan GROUP BY untuk menghitung jumlah baris dalam setiap kelompok:</li>
+</ul>
+<pre><code class="sql-query">SELECT department, COUNT(*) AS total_employees
+FROM employees
+GROUP BY department;
+</code></pre>
+<p>Hasilnya akan memberikan jumlah total pegawai dalam setiap departemen dalam tabel &quot;employees&quot;.</p>
+<h3 id="avg">AVG()</h3>
+<p>Fungsi <code class="sql-query">AVG()</code> digunakan untuk menghitung nilai rata-rata dari suatu kolom numerik dalam hasil query. </p>
+<pre><code class="sql-query">student_id | grade
+1          | 85
+2          | 92
+3          | 78
+4          | 90
+5          | 88
+</code></pre>
+<pre><code class="sql-query">SELECT AVG(grade) AS average_grade
+FROM grades;
+</code></pre>
+<pre><code class="sql-query">average_grade
+86.6
+</code></pre>
+<h3 id="round">ROUND()</h3>
+<p>Fungsi <code class="sql-query">ROUND()</code> digunakan untuk membulatkan nilai numerik ke jumlah digit yang ditentukan setelah titik desimal.</p>
+<pre><code class="sql-query">ROUND(numeric_expression, num_decimal_places)
+</code></pre>
+<ul>
+<li><code class="sql-query">numeric_expression</code> adalah nilai numerik yang ingin dibulatkan.</li>
+<li><code class="sql-query">num_decimal_places</code> adalah jumlah digit desimal yang diinginkan setelah pembulatan.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="sql-query">SELECT ROUND(123.456, 2) AS rounded_number;
+</code></pre>
+<p>Pada contoh ini, nilai numerik 123.456 akan dibulatkan menjadi dua digit desimal setelah titik desimal, sehingga hasilnya adalah 123.46.</p>
+<pre><code class="sql-query">SELECT ROUND(5.6789, 1) AS rounded_number;
+</code></pre>
+<p>Pada contoh ini, nilai numerik 5.6789 akan dibulatkan menjadi satu digit desimal setelah titik desimal, sehingga hasilnya adalah 5.7.</p>
+<h3 id="having">HAVING</h3>
+<p>Klausa <code class="sql-query">HAVING</code> digunakan bersama dengan klausa <code class="sql-query">GROUP BY</code> dalam pernyataan SQL untuk memberikan kondisi filter pada hasil dari pengelompokan yang dihasilkan oleh <code class="sql-query">GROUP BY</code>. Ini berarti Anda dapat menggunakan <code class="sql-query">HAVING</code> untuk menerapkan kondisi pada hasil agregat yang dihasilkan oleh pengelompokan, mirip dengan cara Anda menggunakan klausa <code class="sql-query">WHERE</code> untuk menerapkan kondisi pada baris-baris individual dalam hasil query.</p>
+<p>Misalkan kita memiliki tabel &quot;orders&quot; yang berisi daftar pesanan beserta total harga dari setiap pesanan, dan kita ingin mengelompokkan pesanan berdasarkan ID pelanggan dan hanya menampilkan pelanggan yang memiliki total pembelian lebih dari 1000:</p>
+<pre><code class="sql-query">SELECT customer_id, SUM(total_price) AS total_spent
+FROM orders
+GROUP BY customer_id
+HAVING SUM(total_price) &gt; 1000;
+</code></pre>
+<p>Pada contoh di atas, klausa <code class="sql-query">GROUP BY customer_id</code> digunakan untuk mengelompokkan pesanan berdasarkan ID pelanggan. Kemudian, klausa <code class="sql-query">HAVING</code> digunakan untuk memfilter hasil pengelompokan tersebut, sehingga hanya menampilkan pelanggan yang total pembelian mereka melebihi 1000.</p>
+<p>Perlu diingat bahwa <code class="sql-query">HAVING</code> digunakan setelah <code class="sql-query">GROUP BY</code> dan sebelum <code class="sql-query">ORDER BY</code> dalam sebuah pernyataan SQL. Ini memungkinkan Anda untuk menerapkan kondisi pada hasil agregat, sementara <code class="sql-query">WHERE</code> diterapkan pada baris individual sebelum dilakukan pengelompokan.</p>
+<hr>
+<h2 id="multiple-tables">Multiple Tables</h2>
+<p>Kueri yang melibatkan beberapa tabel seringkali digunakan untuk mengambil data yang berkaitan dari beberapa sumber data.</p>
+<h3 id="outer-join">Outer Join</h3>
+<p>Outer Join adalah operasi join yang menggabungkan baris dari dua tabel berdasarkan kriteria yang ditentukan dan juga memasukkan baris yang tidak memiliki kecocokan dari kedua tabel.</p>
+<p>Ada tiga jenis Outer Join:</p>
+<ul>
+<li><strong>Left Outer Join (atau Left Join)</strong>: Mengembalikan semua baris dari tabel kiri (tabel yang disebut pertama dalam pernyataan JOIN), dan baris yang cocok dari tabel kanan (tabel kedua yang disebut) jika ada.</li>
+</ul>
+<p>Misalkan kita memiliki dua tabel: &quot;customers&quot; dan &quot;orders&quot;. Kita ingin menggabungkan data dari kedua tabel sehingga kita dapat melihat informasi pelanggan bersama dengan pesanan mereka, bahkan jika ada pelanggan yang belum membuat pesanan.</p>
+<pre><code class="sql-query">SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
+FROM customers
+LEFT JOIN orders ON customers.customer_id = orders.customer_id;
+</code></pre>
+<ul>
+<li><strong>Right Outer Join (atau Right Join)</strong>: Mengembalikan semua baris dari tabel kanan, dan baris yang cocok dari tabel kiri jika ada.</li>
+</ul>
+<p>Misalkan kita memiliki dua tabel: &quot;customers&quot; dan &quot;orders&quot;. Kita ingin menggabungkan data dari kedua tabel sehingga kita dapat melihat informasi pesanan bersama dengan informasi pelanggan yang telah membuat pesanan, bahkan jika ada pesanan yang tidak memiliki informasi pelanggan yang terkait.</p>
+<pre><code class="sql-query">SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
+FROM orders
+RIGHT JOIN customers ON orders.customer_id = customers.customer_id;
+</code></pre>
+<ul>
+<li><strong>Full Outer Join (atau Full Join)</strong>: Mengembalikan semua baris dari kedua tabel, mencocokkan baris jika ada dan memasukkan baris yang tidak memiliki kecocokan dari kedua tabel</li>
+</ul>
+<p>Misalkan kita ingin menggabungkan data dari dua tabel &quot;customers&quot; dan &quot;orders&quot; sehingga kita dapat melihat semua informasi pelanggan bersama dengan semua pesanan, bahkan jika ada pelanggan yang tidak memiliki pesanan atau pesanan yang tidak memiliki informasi pelanggan yang terkait.</p>
+<pre><code class="sql-query">SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
+FROM customers
+FULL JOIN orders ON customers.customer_id = orders.customer_id;
+</code></pre>
+<h3 id="inner-join">Inner Join</h3>
+<p>Inner Join adalah salah satu jenis operasi join dalam SQL yang menggabungkan baris dari dua tabel berdasarkan kriteria yang ditentukan dan hanya mengembalikan baris yang memiliki kecocokan dalam kedua tabel. Dengan kata lain, Inner Join menggabungkan baris dari kedua tabel hanya jika ada nilai yang cocok di kolom yang dijadikan sebagai kunci penggabungan.</p>
+<p>Misalkan kita memiliki dua tabel: &quot;customers&quot; dan &quot;orders&quot;. Tabel &quot;customers&quot; berisi informasi pelanggan, sedangkan tabel &quot;orders&quot; berisi informasi pesanan yang dilakukan oleh pelanggan.</p>
+<pre><code class="sql-query">SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
+FROM customers
+INNER JOIN orders ON customers.customer_id = orders.customer_id;
+</code></pre>
+<p>Pada contoh ini, Inner Join digunakan untuk menggabungkan informasi dari kedua tabel berdasarkan kolom &quot;customer_id&quot;. Hasilnya adalah hanya baris-baris di mana ada pelanggan yang memiliki pesanan yang cocok akan ditampilkan. Jika tidak ada pesanan yang cocok untuk seorang pelanggan, baris tersebut tidak akan dimasukkan dalam hasilnya.</p>
+<h3 id="cross-join">Cross Join</h3>
+<p>Cross Join adalah jenis operasi join dalam SQL yang menggabungkan setiap baris dari satu tabel dengan setiap baris dari tabel lainnya, tanpa memperhatikan kondisi penggabungan tertentu. Dengan kata lain, Cross Join menghasilkan hasil gabungan dari kedua tabel, di mana setiap baris dari tabel pertama dikombinasikan dengan setiap baris dari tabel kedua.</p>
+<p>Misalkan kita memiliki dua tabel: &quot;customers&quot; dan &quot;products&quot;. Tabel &quot;customers&quot; berisi daftar pelanggan, sedangkan tabel &quot;products&quot; berisi daftar produk.</p>
+<pre><code class="sql-query">SELECT customers.customer_id, customers.name, products.product_id, products.product_name
+FROM customers
+CROSS JOIN products;
+</code></pre>
+<p>Pada contoh ini, Cross Join akan menghasilkan hasil gabungan dari setiap baris dalam tabel &quot;customers&quot; dengan setiap baris dalam tabel &quot;products&quot;. Ini berarti setiap pelanggan akan dikombinasikan dengan setiap produk, menghasilkan setiap kemungkinan pasangan pelanggan-produk. Jumlah baris dalam hasilnya akan menjadi jumlah baris dalam tabel &quot;customers&quot; dikalikan dengan jumlah baris dalam tabel &quot;products&quot;.</p>
+<h3 id="with">WITH</h3>
+<p>Klausa <code class="sql-query">WITH</code> digunakan untuk membuat satu atau beberapa tabel sementara yang dapat digunakan dalam query utama.</p>
+<p>Misalkan kita memiliki tabel &quot;employees&quot; dan kita ingin membuat query yang menggabungkan informasi tentang pegawai bersama dengan informasi tentang departemen mereka, tetapi kita ingin menggunakannya dalam beberapa bagian dari query.</p>
+<pre><code class="sql-query">WITH EmployeeDepartments AS (
+    SELECT e.employee_id, e.employee_name, d.department_name
+    FROM employees e
+    JOIN departments d ON e.department_id = d.department_id
+)
+SELECT ed.employee_id, ed.employee_name, ed.department_name, COUNT(*) AS num_employees
+FROM EmployeeDepartments ed
+GROUP BY ed.department_name;
+</code></pre>
+<p>Dalam contoh ini, kita menggunakan <code class="sql-query">WITH</code> untuk membuat CTE yang disebut &quot;EmployeeDepartments&quot; yang menggabungkan informasi pegawai dengan informasi departemen. Kemudian, kita menggunakan CTE tersebut dalam query utama untuk menghitung jumlah pegawai dalam setiap departemen. Ini membuat query lebih mudah dibaca dan lebih mudah dimengerti.</p>
+<h3 id="union">UNION</h3>
+<p>Klausa <code class="sql-query">UNION</code> digunakan untuk menggabungkan hasil dua atau lebih query yang memiliki struktur dan tipe data yang sama menjadi satu hasil tunggal. Hasil <code class="sql-query">UNION</code> akan menghilangkan duplikat dari hasil penggabungan.</p>
+<pre><code class="sql-query">SELECT employee_name AS name
+FROM employees
+UNION
+SELECT customer_name AS name
+FROM customers;
+</code></pre>
+<p>Dalam contoh ini, kita menggunakan UNION untuk menggabungkan nama-nama pegawai dari tabel &quot;employees&quot; dengan nama-nama pelanggan dari tabel &quot;customers&quot;. Hasilnya adalah satu daftar tunggal yang berisi semua nama, di mana duplikat akan dihapus.</p>
+<p>Penting untuk diingat bahwa untuk menggunakan UNION, jumlah dan tipe data kolom yang dihasilkan oleh kedua subquery harus sama atau sesuai. Jika jumlah atau tipe data kolom tidak cocok, query akan menghasilkan kesalahan.</p>
+<h3 id="primary-key">PRIMARY KEY</h3>
+<p>Primary Key adalah satu atau sekelompok kolom dalam sebuah tabel yang secara unik mengidentifikasi setiap baris atau catatan dalam tabel tersebut.</p>
+<ul>
+<li>Setiap tabel harus memiliki satu Primary Key, yang mengidentifikasi baris-baris unik dalam tabel tersebut.</li>
+<li>Nilai dalam kolom Primary Key harus unik dan tidak boleh NULL.</li>
+<li>Primary Key sering kali diterapkan dengan menggunakan indeks, yang mempercepat pencarian dan pengindeksan data.</li>
+<li>Contoh: Jika kita memiliki tabel &quot;students&quot; dengan kolom &quot;student_id&quot; sebagai Primary Key, setiap nilai dalam kolom &quot;student_id&quot; harus unik dan dapat mengidentifikasi setiap siswa dengan cara yang eksklusif.</li>
+</ul>
+<pre><code class="sql-query">CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    customer_email VARCHAR(100)
+);
+</code></pre>
+<h3 id="foreign-key">FOREIGN KEY</h3>
+<p>Foreign Key adalah satu atau sekelompok kolom dalam sebuah tabel yang merujuk ke Primary Key atau Unique Key di tabel lain.</p>
+<ul>
+<li>Foreign Key menciptakan hubungan antara dua tabel, memungkinkan tabel untuk saling terkait dalam basis data.</li>
+<li>Foreign Key digunakan untuk menerapkan integritas referensial, yang memastikan bahwa nilai dalam kolom yang mengacu ke tabel lain selalu memiliki referensi yang valid.</li>
+<li>Nilai dalam kolom Foreign Key bisa saja NULL, yang berarti tidak ada referensi yang valid.</li>
+<li>Contoh: Jika kita memiliki tabel &quot;orders&quot; dengan kolom &quot;customer_id&quot; sebagai Foreign Key yang merujuk ke kolom &quot;customer_id&quot; dalam tabel &quot;customers&quot;, maka setiap nilai dalam kolom &quot;customer_id&quot; dalam tabel &quot;orders&quot; harus ada dalam kolom &quot;customer_id&quot; dalam tabel &quot;customers&quot;.</li>
+</ul>
+<pre><code class="sql-query">CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    order_date DATE,
+    total_amount DECIMAL(10, 2),
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+</code></pre>
+
+</div>
+
+<script>
+  console.log('running...');
+  let sqlKeywords = ['SELECT', 'UPDATE', 'DELETE', 'INSERT', 'INTO', 'CREATE', 'DATABASE', 'ALTER', 'TABLE', 'DROP', 'INDEX', 'FROM', 'ADD', 'SET', 'WHERE', 'AND', 'AS', 'OR', 'ORDER BY', 'GROUP BY', 'LIKE', 'DISTINCT', 'BETWEEN', 'LIMIT', 'IS NULL', 'IS NOT NULL', 'HAVING', 'LEFT JOIN', 'RIGHT JOIN', 'FULL JOIN', 'INNER JOIN', 'CROSS JOIN', 'WITH', 'UNION', 'PRIMARY KEY', 'FOREIGN KEY', 'ALL', 'ANY', 'EXISTS', 'IN', 'NOT', 'SOME', 'SUM', 'MAX', 'MIN', 'COUNT', 'AVG', 'ROUND', 'DESC', 'ASC', 'ON'];
+
+  function highlightSQL(input) {
+    let text = input.textContent || input.innerText;
+    sqlKeywords.forEach(function(keyword) {
+      let re = new RegExp('\\b' + keyword + '\\b', 'gi');
+      text = text.replace(re, '<span class="sql-highlight">' + keyword + '</span>');
+    });
+    input.innerHTML = text;
+  }
+
+  function highlightQuotes(input) {
+  let text = input.innerHTML;
+  let re = /'[^']*'/g;
+  let match;
+  while ((match = re.exec(text)) !== null) {
+    if (!match.input.substring(match.index - 7, match.index).includes('sql-highlight') &&
+        !match.input.substring(match.index + match[0].length, match.index + match[0].length + 7).includes('sql-highlight')) {
+      text = text.substring(0, match.index) + 
+             '<span class="sql-quote">' + match[0] + '</span>' + 
+             text.substring(match.index + match[0].length);
+    }
+  }
+  input.innerHTML = text;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  let sqlCodes = document.getElementsByClassName('sql-query');
+  for (let i = 0; i < sqlCodes.length; i++) {
+    highlightSQL(sqlCodes[i]);
+    // highlightQuotes(sqlCodes[i]);
+  }
+});
+
+let toggleBtn = document.getElementById('toggleBtn');
+let clsBtn = document.getElementById('clsBtn');
+let toc = document.querySelector('.toc');
+
+toggleBtn.addEventListener('click', function() {
+  document.body.classList.toggle('show-toc');
+});
+
+clsBtn.addEventListener('click', function() {
+  document.body.classList.remove('show-toc');
+});
+
+
+</script>
+
+</body>
+</html>

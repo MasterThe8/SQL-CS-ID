@@ -1,0 +1,150 @@
+/* Styles for Markdown content */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background-color: #24292e;
+    margin: 20px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: #0366d6;
+  }
+  
+  h1 {
+    font-size: 28px;
+  }
+  
+  h2 {
+    font-size: 24px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
+  
+  h4 {
+    font-size: 18px;
+  }
+  
+  h5 {
+    font-size: 16px;
+  }
+  
+  h6 {
+    font-size: 14px;
+  }
+  
+  p {
+    margin-bottom: 16px;
+  }
+  
+  pre {
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #121314;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  
+  code {
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    font-size: 14px;
+    color: #f6f8fa;
+    background-color: #121314;
+    padding: 3px 6px;
+    border-radius: 3px;
+  }
+  
+  hr {
+    border: 0;
+    border-top: 1px solid #e1e4e8;
+    margin: 24px 0;
+  }
+  
+  em {
+    font-style: italic;
+    color: #6a737d;
+  }
+  
+
+
+  .toc {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 250px;
+    background-color: #2c2c2c;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .toc h2 {
+    font-size: 18px;
+    margin-top: 0;
+  }
+
+  .toc h3 {
+    font-size: 16px;
+    margin-top: 0;
+  }
+
+  .toc ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc li {
+    margin-bottom: 5px;
+  }
+
+  .toc a {
+    text-decoration: none;
+    color: #00d9ff;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
+  }
+
+  .toc .sub-bab{
+    margin-left: 20px;
+  }
+
+  .sql-highlight {
+    color: #ff69b4; /* Warna pink */
+    font-weight: bold;
+  }
+
+  .sql-quote {
+    color: yellow;
+  }
+
+  .toc {
+    display: none; /* Mulai dengan menyembunyikan tabel konten */
+  }
+  
+  .show-toc .toc {
+    display: block; /* Menampilkan tabel konten jika kelas .show-toc ditambahkan */
+  }
+
+  button {
+    padding: 5px;
+    background-color: #111111;
+    color: #00d9ff;
+    border: 1px #fff solid;
+
+  }
+
+  .toc #clsBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
