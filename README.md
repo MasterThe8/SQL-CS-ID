@@ -1,6 +1,8 @@
 # SQL Fundamentals
 *owner : MasterThe8*
 
+[View Website](https://masterthe8.github.io/SQL-CS-ID/)
+
 ---
 ## Manipulation
 Operasi-operasi yang digunakan untuk memanipulasi data dalam basis data.
