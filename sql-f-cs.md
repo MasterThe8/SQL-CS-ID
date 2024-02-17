@@ -7,9 +7,20 @@
 ## Manipulation
 Operasi-operasi yang digunakan untuk memanipulasi data dalam basis data.
 
-### CREATE
-Membuat tabel
+### CREATE DATABASE
+Membuat Database
+```
+CREATE DATABASE nama_database;
+```
 
+### DROP DATABASE
+Menghapus Database
+```
+DROP DATABASE nama_database;
+```
+
+### CREATE TABLE
+Membuat tabel
 ```
 CREATE TABLE table_name (
   column1 datatype,
