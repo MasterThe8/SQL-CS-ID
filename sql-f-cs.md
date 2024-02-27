@@ -9,19 +9,19 @@ Operasi-operasi yang digunakan untuk memanipulasi data dalam basis data.
 
 ### CREATE DATABASE
 Membuat Database
-```
+```sql
 CREATE DATABASE nama_database;
 ```
 
 ### DROP DATABASE
 Menghapus Database
-```
+```sql
 DROP DATABASE nama_database;
 ```
 
 ### CREATE TABLE
 Membuat tabel
-```
+```sql
 CREATE TABLE table_name (
   column1 datatype,
   column2 datatype,
@@ -32,7 +32,7 @@ CREATE TABLE table_name (
 ### INSERT
 Menambah data (baris) baru ke tabel
 
-```
+```sql
 -- Insert into columns in order:
 INSERT INTO table_name
 VALUES (value1, value2);
@@ -45,21 +45,21 @@ VALUES (value1, value2);
 ### ALTER
 `ALTER TABLE` digunakan untuk mengubah kolom tabel yang ada. Jika digabungkan dengan klausa `ADD`, digunakan untuk menambahkan kolom baru.
 
-```
+```sql
 ALTER TABLE table_name
 ADD column_name datatype;
 ```
 
 ### DELETE
 Menghapus baris pada tabel
-```
+```sql
 DELETE FROM table_name
 WHERE some_column = some_value;
 ```
 
 ### UPDATE
 Memperbarui value pada tabel berdasarkan baris
-```
+```sql
 UPDATE table_name
 SET column1 = value1, column2 = value2
 WHERE some_column = some_value;
@@ -75,7 +75,7 @@ Operasi-operasi (Query) yang digunakan untuk mengambil data dari basis data.
 
 ### AND
 Operator `AND` memungkinkan beberapa kondisi untuk digabungkan.
-```
+```sql
 SELECT model 
 FROM cars 
 WHERE color = 'blue' 
@@ -84,14 +84,14 @@ WHERE color = 'blue'
 
 ### AS
 Kolom atau tabel dapat diberi alias menggunakan klausa `AS`. Hal ini memungkinkan kolom atau tabel diganti namanya secara khusus di kumpulan hasil yang dikembalikan. Kueri yang diberikan akan mengembalikan kumpulan hasil dengan kolom `name` diubah namanya menjadi `movie_title`.
-```
+```sql
 SELECT name AS 'movie_title'
 FROM movies;
 ```
 
 ### OR
 Operator `OR` memungkinkan beberapa kondisi untuk digabungkan. Rekaman yang cocok dengan salah satu kondisi yang digabungkan dengan `OR` disertakan dalam kumpulan hasil.
-```
+```sql
 SELECT name
 FROM customers 
 WHERE state = 'CA' 
@@ -103,15 +103,15 @@ Wildcard adalah karakter khusus yang digunakan untuk mencocokkan pola dalam stri
 - `%` (persentase): Digunakan untuk mencocokkan nol atau lebih karakter apa pun dalam string.
 - `_` (garis bawah): Digunakan untuk mencocokkan satu karakter tunggal dalam string.
 
-```
+```sql
 SELECT * FROM customers WHERE name LIKE 'J%'
 ```
 akan mencocokkan semua nama yang dimulai dengan huruf 'J'.
-```
+```sql
 SELECT * FROM products WHERE name LIKE '%apple%'
 ```
 akan mencocokkan semua produk yang memiliki kata 'apple' di dalam namanya.
-```
+```sql
 SELECT * FROM employees WHERE last_name LIKE '_mith'
 ```
 akan mencocokkan semua nama belakang yang memiliki lima karakter, di mana karakter keempat adalah 'm' dan karakter terakhir adalah 'i', 't', dan 'h'.
@@ -122,7 +122,7 @@ Klausa `ORDER BY` dapat digunakan untuk mengurutkan hasil yang ditetapkan berdas
 - `DESC` adalah kata kunci yang digunakan untuk mengurutkan hasil dalam urutan menurun.
 - `ASC` adalah kata kunci yang digunakan untuk mengurutkan hasil dalam urutan menaik (default).
 
-```
+```sql
 SELECT * FROM customers ORDER BY last_name ASC;
 
 SELECT * FROM products ORDER BY price DESC;
@@ -132,14 +132,14 @@ SELECT * FROM orders ORDER BY order_date DESC, total_amount ASC;
 
 ### GROUP BY
 Klausa `GROUP BY` digunakan untuk mengelompokkan baris berdasarkan nilai dalam satu atau beberapa kolom. Ketika Anda menggunakan `GROUP BY`, setiap baris dalam hasil query akan dikelompokkan berdasarkan nilai yang sama dalam kolom yang ditentukan.
-```
+```sql
 SELECT department, COUNT(*) AS employee_count
 FROM employees
 GROUP BY department;
 ```
 Pernyataan ini akan menghitung jumlah pegawai dalam setiap departemen dengan menggunakan GROUP BY department.
 
-```
+```sql
 SELECT rating, 
    COUNT(*) 
 FROM movies 
@@ -153,29 +153,29 @@ Operator `LIKE` dapat digunakan di dalam klausa `WHERE` untuk mencocokkan pola t
 - `_` (garis bawah): Cocokkan satu karakter tunggal.
 
 Pada contoh ini, query akan mengembalikan semua produk yang memiliki kata 'apple' di dalam nama produknya.
-```
+```sql
 SELECT * FROM products WHERE name LIKE '%apple%';
 ```
 
 Pada contoh ini, query akan mengembalikan semua pelanggan yang memiliki alamat email dengan domain 'gmail.com', dengan satu karakter sebelum karakter '@'.
-```
+```sql
 SELECT * FROM customers WHERE email LIKE '_@gmail.com';
 ```
 
 Pada contoh ini, query akan mengembalikan semua pegawai yang nama belakangnya dimulai dengan huruf 'Sm'.
-```
+```sql
 SELECT * FROM employees WHERE last_name LIKE 'Sm%';
 ```
 
 ### DISTINCT
 Klausa `DISTINCT` digunakan untuk menghapus duplikat dari hasil query sehingga hanya nilai unik yang ditampilkan.
 
-```
+```sql
 SELECT DISTINCT department FROM employees;
 ```
 Pada contoh di atas, query akan mengembalikan daftar departemen unik dari tabel "employees", menghilangkan duplikat. Ini berguna jika Anda ingin melihat departemen apa saja yang ada di perusahaan tanpa adanya duplikat.
 
-```
+```sql
 SELECT DISTINCT first_name, last_name FROM customers;
 ```
 Pada contoh ini, query akan mengembalikan daftar nama pelanggan unik dari tabel "customers", tanpa adanya duplikat. Ini memungkinkan Anda untuk melihat kombinasi unik dari nama pelanggan dalam tabel.
@@ -183,7 +183,7 @@ Pada contoh ini, query akan mengembalikan daftar nama pelanggan unik dari tabel 
 ### BETWEEN
 Operator `BETWEEN` digunakan untuk memfilter hasil query berdasarkan range nilai tertentu dari sebuah kolom. Operator ini memungkinkan Anda untuk menentukan batas atas dan batas bawah yang ingin Anda sertakan dalam pencarian.
 
-```
+```sql
 SELECT column_name(s)
 FROM table_name
 WHERE column_name BETWEEN value1 AND value2;
@@ -191,7 +191,7 @@ WHERE column_name BETWEEN value1 AND value2;
 - `column_name` adalah nama kolom yang akan diuji.
 - `value1` dan `value2` adalah nilai yang menentukan batas bawah dan batas atas dari range yang ingin Anda cari.
 
-```
+```sql
 SELECT * FROM products
 WHERE price BETWEEN 10 AND 20;
 ```
@@ -200,13 +200,13 @@ Pada contoh ini, query akan mengembalikan semua produk dengan harga antara 10 da
 ### LIMIT
 Klausa `LIMIT` digunakan untuk membatasi jumlah baris yang dikembalikan oleh sebuah query. Ini sangat berguna ketika Anda ingin mengambil sejumlah tertentu dari hasil query, terutama jika tabel tersebut memiliki banyak baris dan Anda hanya memerlukan sebagian kecil dari hasilnya.
 
-```
+```sql
 SELECT * FROM products
 LIMIT 10;
 ```
 Pada contoh ini, query akan mengembalikan 10 produk pertama dari tabel "products".
 
-```
+```sql
 SELECT * FROM employees
 LIMIT 5, 10;
 ```
@@ -224,12 +224,12 @@ Beberapa hal yang perlu diingat tentang nilai NULL:
 - Ketika NULL muncul dalam ekspresi matematika, hasilnya selalu NULL.
 - Dalam tabel, kolom yang dideklarasikan dengan jenis data tertentu dapat berisi NULL jika kolom tersebut dibiarkan kosong atau jika data yang dimasukkan tidak valid.
 
-```
+```sql
 SELECT * FROM employees WHERE department IS NULL;
 ```
 Query ini akan mengembalikan semua pegawai yang tidak terdaftar dalam departemen manapun, karena kolom departemen mereka berisi nilai NULL.
 
-```
+```sql
 SELECT * FROM students WHERE score IS NOT NULL;
 ```
 Query ini akan mengembalikan semua siswa yang memiliki nilai tidak NULL dalam kolom "score", yaitu siswa yang telah menerima penilaian.
@@ -250,7 +250,7 @@ transaction_id | amount
 4              | 200.00
 5              | 80.00
 ```
-```
+```sql
 SELECT SUM(amount) AS total_sales
 FROM sales;
 ```
@@ -270,7 +270,7 @@ product_id | product_name | price
 4          | Headphones   | 150.00
 5          | Mouse        | 30.00
 ```
-```
+```sql
 SELECT MAX(price) AS highest_price
 FROM products;
 ```
@@ -290,7 +290,7 @@ product_id | product_name | price
 4          | Headphones   | 150.00
 5          | Mouse        | 30.00
 ```
-```
+```sql
 SELECT MIN(price) AS lowest_price
 FROM products;
 ```
@@ -303,21 +303,21 @@ lowest_price
 Fungsi `COUNT()` digunakan untuk menghitung jumlah baris atau nilai yang ditemukan dalam sebuah kolom atau hasil query.
 
 - Menghitung jumlah baris dalam sebuah tabel:
-```
+```sql
 SELECT COUNT(*) AS total_rows
 FROM employees;
 ```
 Hasilnya akan memberikan jumlah total baris dalam tabel "employees".
 
 - Menghitung jumlah nilai yang tidak NULL dalam sebuah kolom:
-```
+```sql
 SELECT COUNT(salary) AS total_salaries
 FROM employees;
 ```
 Hasilnya akan memberikan jumlah total nilai gaji yang tidak NULL dalam kolom "salary" pada tabel "employees".
 
 - Menggunakan COUNT() bersama dengan GROUP BY untuk menghitung jumlah baris dalam setiap kelompok:
-```
+```sql
 SELECT department, COUNT(*) AS total_employees
 FROM employees
 GROUP BY department;
@@ -334,7 +334,7 @@ student_id | grade
 4          | 90
 5          | 88
 ```
-```
+```sql
 SELECT AVG(grade) AS average_grade
 FROM grades;
 ```
@@ -345,19 +345,19 @@ average_grade
 
 ### ROUND()
 Fungsi `ROUND()` digunakan untuk membulatkan nilai numerik ke jumlah digit yang ditentukan setelah titik desimal.
-```
+```sql
 ROUND(numeric_expression, num_decimal_places)
 ```
 - `numeric_expression` adalah nilai numerik yang ingin dibulatkan.
 - `num_decimal_places` adalah jumlah digit desimal yang diinginkan setelah pembulatan.
 
 Example:
-```
+```sql
 SELECT ROUND(123.456, 2) AS rounded_number;
 ```
 Pada contoh ini, nilai numerik 123.456 akan dibulatkan menjadi dua digit desimal setelah titik desimal, sehingga hasilnya adalah 123.46.
 
-```
+```sql
 SELECT ROUND(5.6789, 1) AS rounded_number;
 ```
 Pada contoh ini, nilai numerik 5.6789 akan dibulatkan menjadi satu digit desimal setelah titik desimal, sehingga hasilnya adalah 5.7.
@@ -366,7 +366,7 @@ Pada contoh ini, nilai numerik 5.6789 akan dibulatkan menjadi satu digit desimal
 Klausa `HAVING` digunakan bersama dengan klausa `GROUP BY` dalam pernyataan SQL untuk memberikan kondisi filter pada hasil dari pengelompokan yang dihasilkan oleh `GROUP BY`. Ini berarti Anda dapat menggunakan `HAVING` untuk menerapkan kondisi pada hasil agregat yang dihasilkan oleh pengelompokan, mirip dengan cara Anda menggunakan klausa `WHERE` untuk menerapkan kondisi pada baris-baris individual dalam hasil query.
 
 Misalkan kita memiliki tabel "orders" yang berisi daftar pesanan beserta total harga dari setiap pesanan, dan kita ingin mengelompokkan pesanan berdasarkan ID pelanggan dan hanya menampilkan pelanggan yang memiliki total pembelian lebih dari 1000:
-```
+```sql
 SELECT customer_id, SUM(total_price) AS total_spent
 FROM orders
 GROUP BY customer_id
@@ -388,7 +388,7 @@ Ada tiga jenis Outer Join:
 - **Left Outer Join (atau Left Join)**: Mengembalikan semua baris dari tabel kiri (tabel yang disebut pertama dalam pernyataan JOIN), dan baris yang cocok dari tabel kanan (tabel kedua yang disebut) jika ada.
 
 Misalkan kita memiliki dua tabel: "customers" dan "orders". Kita ingin menggabungkan data dari kedua tabel sehingga kita dapat melihat informasi pelanggan bersama dengan pesanan mereka, bahkan jika ada pelanggan yang belum membuat pesanan.
-```
+```sql
 SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
 FROM customers
 LEFT JOIN orders ON customers.customer_id = orders.customer_id;
@@ -397,7 +397,7 @@ LEFT JOIN orders ON customers.customer_id = orders.customer_id;
 - **Right Outer Join (atau Right Join)**: Mengembalikan semua baris dari tabel kanan, dan baris yang cocok dari tabel kiri jika ada.
 
 Misalkan kita memiliki dua tabel: "customers" dan "orders". Kita ingin menggabungkan data dari kedua tabel sehingga kita dapat melihat informasi pesanan bersama dengan informasi pelanggan yang telah membuat pesanan, bahkan jika ada pesanan yang tidak memiliki informasi pelanggan yang terkait.
-```
+```sql
 SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
 FROM orders
 RIGHT JOIN customers ON orders.customer_id = customers.customer_id;
@@ -406,7 +406,7 @@ RIGHT JOIN customers ON orders.customer_id = customers.customer_id;
 - **Full Outer Join (atau Full Join)**: Mengembalikan semua baris dari kedua tabel, mencocokkan baris jika ada dan memasukkan baris yang tidak memiliki kecocokan dari kedua tabel
 
 Misalkan kita ingin menggabungkan data dari dua tabel "customers" dan "orders" sehingga kita dapat melihat semua informasi pelanggan bersama dengan semua pesanan, bahkan jika ada pelanggan yang tidak memiliki pesanan atau pesanan yang tidak memiliki informasi pelanggan yang terkait.
-```
+```sql
 SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
 FROM customers
 FULL JOIN orders ON customers.customer_id = orders.customer_id;
@@ -416,7 +416,7 @@ FULL JOIN orders ON customers.customer_id = orders.customer_id;
 Inner Join adalah salah satu jenis operasi join dalam SQL yang menggabungkan baris dari dua tabel berdasarkan kriteria yang ditentukan dan hanya mengembalikan baris yang memiliki kecocokan dalam kedua tabel. Dengan kata lain, Inner Join menggabungkan baris dari kedua tabel hanya jika ada nilai yang cocok di kolom yang dijadikan sebagai kunci penggabungan.
 
 Misalkan kita memiliki dua tabel: "customers" dan "orders". Tabel "customers" berisi informasi pelanggan, sedangkan tabel "orders" berisi informasi pesanan yang dilakukan oleh pelanggan.
-```
+```sql
 SELECT customers.customer_id, customers.name, orders.order_id, orders.order_date
 FROM customers
 INNER JOIN orders ON customers.customer_id = orders.customer_id;
@@ -427,7 +427,7 @@ Pada contoh ini, Inner Join digunakan untuk menggabungkan informasi dari kedua t
 Cross Join adalah jenis operasi join dalam SQL yang menggabungkan setiap baris dari satu tabel dengan setiap baris dari tabel lainnya, tanpa memperhatikan kondisi penggabungan tertentu. Dengan kata lain, Cross Join menghasilkan hasil gabungan dari kedua tabel, di mana setiap baris dari tabel pertama dikombinasikan dengan setiap baris dari tabel kedua.
 
 Misalkan kita memiliki dua tabel: "customers" dan "products". Tabel "customers" berisi daftar pelanggan, sedangkan tabel "products" berisi daftar produk.
-```
+```sql
 SELECT customers.customer_id, customers.name, products.product_id, products.product_name
 FROM customers
 CROSS JOIN products;
@@ -438,7 +438,7 @@ Pada contoh ini, Cross Join akan menghasilkan hasil gabungan dari setiap baris d
 Klausa `WITH` digunakan untuk membuat satu atau beberapa tabel sementara yang dapat digunakan dalam query utama.
 
 Misalkan kita memiliki tabel "employees" dan kita ingin membuat query yang menggabungkan informasi tentang pegawai bersama dengan informasi tentang departemen mereka, tetapi kita ingin menggunakannya dalam beberapa bagian dari query.
-```
+```sql
 WITH EmployeeDepartments AS (
     SELECT e.employee_id, e.employee_name, d.department_name
     FROM employees e
@@ -453,7 +453,7 @@ Dalam contoh ini, kita menggunakan `WITH` untuk membuat CTE yang disebut "Employ
 ### UNION
 Klausa `UNION` digunakan untuk menggabungkan hasil dua atau lebih query yang memiliki struktur dan tipe data yang sama menjadi satu hasil tunggal. Hasil `UNION` akan menghilangkan duplikat dari hasil penggabungan.
 
-```
+```sql
 SELECT employee_name AS name
 FROM employees
 UNION
@@ -470,7 +470,7 @@ Primary Key adalah satu atau sekelompok kolom dalam sebuah tabel yang secara uni
 - Nilai dalam kolom Primary Key harus unik dan tidak boleh NULL.
 - Primary Key sering kali diterapkan dengan menggunakan indeks, yang mempercepat pencarian dan pengindeksan data.
 - Contoh: Jika kita memiliki tabel "students" dengan kolom "student_id" sebagai Primary Key, setiap nilai dalam kolom "student_id" harus unik dan dapat mengidentifikasi setiap siswa dengan cara yang eksklusif.
-```
+```sql
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY,
     customer_name VARCHAR(100),
@@ -484,7 +484,7 @@ Foreign Key adalah satu atau sekelompok kolom dalam sebuah tabel yang merujuk ke
 - Foreign Key digunakan untuk menerapkan integritas referensial, yang memastikan bahwa nilai dalam kolom yang mengacu ke tabel lain selalu memiliki referensi yang valid.
 - Nilai dalam kolom Foreign Key bisa saja NULL, yang berarti tidak ada referensi yang valid.
 - Contoh: Jika kita memiliki tabel "orders" dengan kolom "customer_id" sebagai Foreign Key yang merujuk ke kolom "customer_id" dalam tabel "customers", maka setiap nilai dalam kolom "customer_id" dalam tabel "orders" harus ada dalam kolom "customer_id" dalam tabel "customers".
-```
+```sql
 CREATE TABLE orders (
     order_id INT PRIMARY KEY,
     order_date DATE,
